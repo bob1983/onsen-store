@@ -1,4 +1,7 @@
 import { OnsenClient } from '../lib/onsen_client'
+import { Program } from '../lib/program'
+
+export class ProgramNotFoundError extends Error {}
 
 export class ProgramsService {
   client: OnsenClient
@@ -16,5 +19,13 @@ export class ProgramsService {
       .filter(name => {
         return !name.match(/(_|-)ex$/)
       })
+  }
+
+  async fetchProgram(name: string): Promise<Program> {
+    try {
+      return await this.client.fetchProgram(name)
+    } catch (error) {
+      throw new ProgramNotFoundError(`Program: ${name} not found`)
+    }
   }
 }

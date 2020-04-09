@@ -1,4 +1,4 @@
-import { ProgramsService } from './programs.service'
+import { ProgramsService, ProgramNotFoundError } from './programs.service'
 import { OnsenClient } from '../lib/onsen_client'
 
 describe('Programs', () => {
@@ -45,6 +45,43 @@ describe('Programs', () => {
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['gashitai', '-ex_sample']);
     })
+  })
 
+  describe('fetchProgram', () => {
+    it('returns a program', async () => {
+      const expected = {
+        thumbnailPath: "/program/yagakimi/image/619_pgi01_m.jpg",
+        filePath:
+          "https://onsen-dl.sslcs.cdngc.net/radio/yagakimi190418F5Kg.mp3",
+        title: "やがて君になる～私、このラジオ好きになりそう～",
+        personalities: ["高田憂希（小糸侑 役）", "寿美菜子（七海燈子 役）"],
+        guests: [],
+        updateAt: "2019-04-18",
+        titleAlias: "yagakimi",
+        count: 12,
+        schedule: "月1回木曜配信",
+        mail: "yagakimi@onsen.ag",
+        optionText: "やがて君になる製作委員会",
+        copyright: "©2018 仲谷 鳰／ＫＡＤＯＫＡＷＡ／やがて君になる製作委員会",
+        links: [
+          {
+            imagePath: "/program/yagakimi/image/619_pgl01.jpg",
+            url: "http://yagakimi.com/",
+          },
+        ],
+        recommendGoods: [],
+        recommendMovies: [],
+      };
+      jest.spyOn(OnsenClient.prototype, 'fetchProgram').mockResolvedValueOnce(expected)
+      const service = new ProgramsService()
+      expect(await service.fetchProgram('yagakimi')).toEqual(expected)
+    })
+
+    it('returns a error if given program title does not exist', async () => {
+      jest.spyOn(OnsenClient.prototype, 'fetchProgram').mockRejectedValueOnce(new Error('error'))
+      const service = new ProgramsService()
+      await expect(service.fetchProgram('not_exist'))
+        .rejects.toThrow(new ProgramNotFoundError('Program: not_exist not found'))
+    })
   })
 })
