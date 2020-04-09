@@ -5,7 +5,7 @@ jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
 describe('OnsenClient', () => {
-  describe('fetchProgramList', () => {
+  describe('fetchPrograms', () => {
     test('returns program names', async () => {
       mockedAxios.get.mockResolvedValue({ data: { result: ['mhr3', 'koitate'] } })
       const client = OnsenClient.client()
