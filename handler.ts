@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import 'source-map-support/register';
-import { fetchProgramsHandler } from './src/functions/programs.function';
+import { fetchProgramsHandler, fetchProgramHandler } from './src/functions/programs.function';
 
 export const hello: APIGatewayProxyHandler = async (event, _context) => {
   return {
@@ -13,3 +13,4 @@ export const hello: APIGatewayProxyHandler = async (event, _context) => {
 }
 
 export const fetchPrograms = fetchProgramsHandler
+export const fetchProgram = fetchProgramHandler
