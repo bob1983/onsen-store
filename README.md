@@ -7,6 +7,13 @@ Install `serverless`
 npm install -g serverless
 ```
 
+Copy `.envrc` and add configurations.
+
+```shell
+cp .envrc.example .envrc
+vim .envrc
+```
+
 ## Local invocation
 
 ```shell
