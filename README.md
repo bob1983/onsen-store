@@ -17,5 +17,14 @@ vim .envrc
 ## Local invocation
 
 ```shell
-npx sls invoke -f <function-name>
+npx sls invoke local -f fetchPrograms
 ```
+
+With path parameters
+
+```shell
+npx sls invoke local \
+  -f fetchProgram \
+  --data '{ "pathParameters": { "name": "hoge" }}'
+```
+
