@@ -14,7 +14,7 @@ export class ProgramsService {
         return !name.match(/niconama/g)
       })
       .filter(name => {
-        return !name.match(/_ex$/)
+        return !name.match(/(_|-)ex$/)
       })
   }
 }

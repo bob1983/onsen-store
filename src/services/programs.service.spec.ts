@@ -34,5 +34,17 @@ describe('Programs', () => {
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['gashitai', '_ex_sample']);
     })
+
+    it('does not include program end with -ex', async () => {
+      jest.spyOn(OnsenClient.prototype, 'fetchPrograms').mockResolvedValueOnce([
+        'gashitai',
+        '-ex_sample',
+        'gashitai-ex'
+      ])
+      const service = new ProgramsService()
+      const programs = await service.fetchPrograms()
+      expect(programs).toEqual(['gashitai', '-ex_sample']);
+    })
+
   })
 })
