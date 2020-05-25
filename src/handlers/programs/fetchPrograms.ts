@@ -1,8 +1,9 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { ProgramsService } from "../services/programs.service";
+import { ProgramsService } from '../../services/programs.service'
 
-const service = new ProgramsService
-export const fetchProgramsHandler: APIGatewayProxyHandler = async (
+const service = new ProgramsService()
+
+const fetchProgramsHandler: APIGatewayProxyHandler = async (
   _event,
   _context
 ) => {
@@ -19,6 +20,8 @@ export const fetchProgramsHandler: APIGatewayProxyHandler = async (
     };
   }
 };
+
+export const handler = fetchProgramsHandler
 
 export const fetchProgramHandler: APIGatewayProxyHandler = async (
   event,

@@ -12,7 +12,6 @@ custom:
 plugins:
   - serverless-webpack
   - serverless-layers
-  - serverless-offline
 
 provider:
   name: aws
@@ -42,14 +41,14 @@ provider:
 
 functions:
   fetchPrograms:
-    handler: src/handlers/fetchPrograms.handler
+    handler: src/handlers/programs/fetchPrograms.handler
     events:
       - http:
           method: get
           path: /programs
 
   fetchProgram:
-    handler: handler.fetchProgram
+    handler: src/handlers/programs/fetchProgram.handler
     events:
       - http:
           method: get
