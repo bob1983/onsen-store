@@ -1,12 +1,19 @@
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import { OnsenProgramsService } from '../../services/onsen_programs.service'
+import { SyncOnsenProgramsService } from '../../services/sync_onsen_programs.service'
+import { ProgramsService } from '../../services/programs.service'
 
-const service = new OnsenProgramsService()
+const onsenProgramsService = new OnsenProgramsService()
+const programsService = new ProgramsService()
+const syncOnsenProgramsService = new SyncOnsenProgramsService(
+  onsenProgramsService,
+  programsService,
+)
 
 const syncProgramHandler: APIGatewayProxyHandler = async (event, _context) => {
   const name = event.pathParameters.name
   try {
-    const program = await service.fetchProgram(name)
+    const program = await syncOnsenProgramsService.syncProgram(name)
     return {
       statusCode: 200,
       body: JSON.stringify({ data: program }, null, 2),
