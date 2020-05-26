@@ -7,6 +7,9 @@ custom:
     includeModules: false
   serverless-layers:
     layersDeploymentBucket: ${env:LAYER_DEPLOYMENT_BUCKET}
+  ProgramsTable:
+    name: !Ref ProgramsTable
+    arn:  !GetAtt ProgramsTable.Arn
 
 # Add the serverless-webpack plugin
 plugins:
@@ -29,16 +32,7 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/*"
-
+    - ${file(iam/ProgramsTableIAM.yml):ProgramsTableIAM}
 functions:
   fetchPrograms:
     handler: src/handlers/programs/fetchPrograms.handler
@@ -60,17 +54,4 @@ functions:
 
 resources:
   Resources:
-    SubscriptionsTable:
-      Type: AWS::DynamoDB::Table
-      DeletionPolicy: Retain # Keeps around the DynamoDB resource when we redeploy/destroy
-      Properties:
-        TableName: ${self:provider.environment.TABLE_SUBSCRIPTIONS}
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+    ProgramsTable: ${file(resources/ProgramsTable.yml):ProgramsTable}
