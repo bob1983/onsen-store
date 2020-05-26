@@ -4,8 +4,8 @@ ProgramsTable:
     TableName: ProgramsTable-${self:provider.stage}
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
-      - AttributeName: id
+      - AttributeName: title
         AttributeType: S
     KeySchema:
-      - AttributeName: id
+      - AttributeName: title
         KeyType: HASH
