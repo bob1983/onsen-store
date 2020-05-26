@@ -3,7 +3,7 @@ import { Program } from '../lib/program'
 
 export class ProgramNotFoundError extends Error {}
 
-export class ProgramsService {
+export class OnsenProgramsService {
   client: OnsenClient
 
   constructor() {

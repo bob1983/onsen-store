@@ -41,8 +41,8 @@ functions:
           method: get
           path: /programs
 
-  fetchProgram:
-    handler: src/handlers/programs/fetchProgram.handler
+  syncProgram:
+    handler: src/handlers/programs/syncProgram.handler
     events:
       - http:
           method: get

@@ -1,14 +1,14 @@
-import { ProgramsService, ProgramNotFoundError } from './programs.service'
+import { OnsenProgramsService, ProgramNotFoundError } from './onsen_programs.service'
 import { OnsenClient } from '../lib/onsen_client'
 
-describe('Programs', () => {
+describe('OnsenProgramsService', () => {
   describe('fetchPrograms', () => {
     it('returns programs', async () => {
       jest.spyOn(OnsenClient.prototype, 'fetchPrograms').mockResolvedValueOnce([
         'mhr3',
         'stb'
       ])
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['mhr3', 'stb'])
     })
@@ -19,7 +19,7 @@ describe('Programs', () => {
         'niconama_stb',
         'stb_niconama'
       ])
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['stb']);
     })
@@ -30,7 +30,7 @@ describe('Programs', () => {
         '_ex_sample',
         'gashitai_ex'
       ])
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['gashitai', '_ex_sample']);
     })
@@ -41,7 +41,7 @@ describe('Programs', () => {
         '-ex_sample',
         'gashitai-ex'
       ])
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       const programs = await service.fetchPrograms()
       expect(programs).toEqual(['gashitai', '-ex_sample']);
     })
@@ -73,13 +73,13 @@ describe('Programs', () => {
         recommendMovies: [],
       };
       jest.spyOn(OnsenClient.prototype, 'fetchProgram').mockResolvedValueOnce(expected)
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       expect(await service.fetchProgram('yagakimi')).toEqual(expected)
     })
 
     it('returns a error if given program title does not exist', async () => {
       jest.spyOn(OnsenClient.prototype, 'fetchProgram').mockRejectedValueOnce(new Error('error'))
-      const service = new ProgramsService()
+      const service = new OnsenProgramsService()
       await expect(service.fetchProgram('not_exist'))
         .rejects.toThrow(new ProgramNotFoundError('Program: not_exist not found'))
     })

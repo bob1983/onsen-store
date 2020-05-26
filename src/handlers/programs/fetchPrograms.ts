@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { ProgramsService } from '../../services/programs.service'
+import { OnsenProgramsService } from '../../services/onsen_programs.service'
 
-const service = new ProgramsService()
+const service = new OnsenProgramsService()
 
 const fetchProgramsHandler: APIGatewayProxyHandler = async (
   _event,
