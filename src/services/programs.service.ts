@@ -7,13 +7,17 @@ export class ProgramsService {
     this.dynamodbClient = new DocumentClient()
   }
 
-  public async fetchProgram(title: string): Promise<any> {
+  public async fetchProgram(titleAlias: string): Promise<any> {
+    console.log('titleAlias: ', titleAlias)
+
     const result = await this.dynamodbClient.get({
       TableName: process.env.PROGRAMS_TABLE_NAME,
       Key: {
-        title
+        titleAlias
       }
     }).promise()
-    return result
+
+    console.log('Result: ', result)
+    return result.Item
   }
 }

@@ -11,9 +11,10 @@ const syncOnsenProgramsService = new SyncOnsenProgramsService(
 )
 
 const syncProgramHandler: APIGatewayProxyHandler = async (event, _context) => {
-  const name = event.pathParameters.name
+  const titleAlias = event.pathParameters.titleAlias
+
   try {
-    const program = await syncOnsenProgramsService.syncProgram(name)
+    const program = await syncOnsenProgramsService.syncProgram(titleAlias)
     return {
       statusCode: 200,
       body: JSON.stringify({ data: program }, null, 2),

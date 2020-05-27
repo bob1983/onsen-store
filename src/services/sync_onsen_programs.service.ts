@@ -12,12 +12,13 @@ export class SyncOnsenProgramsService {
     this.dynamodbClient = new DocumentClient()
   }
 
-  public async syncProgram(title: string): Promise<{}> {
-    const program = await this.onsenProgramsService.fetchProgram(title)
+  public async syncProgram(titleAlias: string): Promise<{}> {
+    const program = await this.onsenProgramsService.fetchProgram(titleAlias)
 
-    const syncedProgram = await this.programsService.fetchProgram(title)
+    console.log('syncProgram: program: ', program)
+    const syncedProgram = await this.programsService.fetchProgram(titleAlias)
 
-    console.log(syncedProgram)
+    console.log('syncProgram: syncedProgram: ', syncedProgram)
 
     let result
     if (!syncedProgram) {

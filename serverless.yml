@@ -34,6 +34,7 @@ provider:
     PROGRAMS_TABLE_NAME: ${self:custom.ProgramsTable.name}
   iamRoleStatements:
     - ${file(iam/ProgramsTableIAM.yml):ProgramsTableIAM}
+
 functions:
   fetchPrograms:
     handler: src/handlers/programs/fetchPrograms.handler
@@ -47,7 +48,7 @@ functions:
     events:
       - http:
           method: get
-          path: /programs/{name}
+          path: /programs/{titleAlias}
           request:
             parameters:
               paths:
